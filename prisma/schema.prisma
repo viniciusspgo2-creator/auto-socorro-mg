@@ -1,0 +1,54 @@
+// Prisma schema — Auto Socorro MG
+// Produção: PostgreSQL serverless (Neon / Supabase / Vercel Postgres)
+// Desenvolvimento local: PostgreSQL local (mesmo protocolo)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Artigos do blog (SEO)
+model Post {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  excerpt     String
+  content     String // Markdown
+  coverImage  String? // ex: /img/guincho-vermelho.webp
+  published   Boolean  @default(false)
+  publishedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([published, publishedAt])
+}
+
+// Configuração central do site e de SEO (editável no painel admin)
+model SiteSettings {
+  id               String   @id @default("main")
+  siteName         String   @default("Auto Socorro MG")
+  siteUrl          String   @default("")
+  metaTitle        String   @default("Auto Socorro MG | Guincho 24h em Santa Fé do Sul")
+  metaDescription  String   @default("Auto Socorro 24 horas para carros e veículos pesados em Santa Fé do Sul e região. Ligue ou chame pelo WhatsApp.")
+  ogImage          String   @default("/img/frota.webp")
+  whatsappNumber   String   @default("5517996371352")
+  whatsappMessage  String   @default("Olá! Preciso de atendimento de guincho. Minha localização é:")
+  phoneDisplay     String   @default("(17) 99637-1352")
+  phoneE164        String   @default("+5517996371352")
+  gaId             String   @default("") // Google Analytics (G-XXXXXXX)
+  gtmId            String   @default("") // Google Tag Manager (GTM-XXXXXXX)
+  updatedAt        DateTime @updatedAt
+}
+
+// Contador de visitas
+model Visit {
+  id        String   @id @default(cuid())
+  path      String   @default("/")
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
