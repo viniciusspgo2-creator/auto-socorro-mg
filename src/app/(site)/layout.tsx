@@ -2,8 +2,6 @@ import { SiteHeader } from '@/components/site/header'
 import { SiteFooter } from '@/components/site/footer'
 import { SiteFx } from '@/components/site/site-fx'
 import { VisitTracker } from '@/components/site/visit-tracker'
-// ⚠️ TEMPORÁRIO — remover esta importação + <TempDownloadButton /> após baixar o projeto
-import { TempDownloadButton } from '@/components/site/temp-download'
 import { getSettings } from '@/lib/settings'
 import { whatsappUrl } from '@/config/site'
 import '@/styles/site.css'
@@ -37,8 +35,6 @@ export default async function SiteLayout({
       />
       <SiteFx />
       <VisitTracker />
-      {/* ⚠️ TEMPORÁRIO — botão de download do projeto; remover após o handoff */}
-      <TempDownloadButton />
     </div>
   )
 }
